@@ -1,7 +1,13 @@
 from flask import Flask, request, jsonify
 from transformers import pipeline
+from flask import Flask, request, jsonify, render_template
+
 
 app = Flask(__name__)
+@app.route("/")
+def home():
+    return render_template("index.html")
+
 
 # MODEL YÜKLE (uygulama başlarken bir kez yüklenir)
 sentiment_analyzer = pipeline(
