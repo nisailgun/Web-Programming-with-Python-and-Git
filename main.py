@@ -1,18 +1,18 @@
-from flask import Flask, request, jsonify
-from transformers import pipeline
 from flask import Flask, request, jsonify, render_template
-
+from transformers import pipeline
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)  # allow all origins
+
 @app.route("/")
 def home():
     return render_template("index.html")
 
-
-# MODEL YÜKLE (uygulama başlarken bir kez yüklenir)
+# LOAD ENGLISH SENTIMENT MODEL
 sentiment_analyzer = pipeline(
     "sentiment-analysis",
-    model="savasy/bert-base-turkish-sentiment-cased"
+    model="distilbert-base-uncased-finetuned-sst-2-english"
 )
 
 @app.route("/analyze", methods=["POST"])
@@ -21,17 +21,18 @@ def analyze_sentiment():
 
     if not data or "text" not in data:
         return jsonify({
-            "error": "Lütfen 'text' alanı gönderin"
+            "error": "Please provide a 'text' field"
         }), 400
 
     text = data["text"]
 
-    result = sentiment_analyzer(text)
+    # FORCE SINGLE STRING INPUT
+    result = sentiment_analyzer([text])[0]
 
     response = {
         "text": text,
-        "sentiment": result[0]["label"],
-        "confidence": round(result[0]["score"], 3)
+        "sentiment": result["label"],
+        "confidence": round(float(result["score"]), 3)
     }
 
     return jsonify(response)
