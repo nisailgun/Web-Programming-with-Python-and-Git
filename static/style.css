@@ -1,58 +1,260 @@
-* {
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+:root{
+  --bg1:#fff5fb;
+  --bg2:#f6f3ff;
+
+  --pink-50: rgba(255, 204, 232, 0.45);
+  --pink-70: rgba(255, 204, 232, 0.65);
+  --pink-border: rgba(255, 105, 180, 0.22);
+
+  --text:#111827;
+  --muted:#6b7280;
+
+  --pos:#16a34a;
+  --neg:#dc2626;
+
+  --shadow: 0 18px 50px rgba(17,24,39,.12);
+  --shadow-soft: 0 10px 26px rgba(17,24,39,.10);
+  --radius: 18px;
+  --radius-sm: 14px;
 }
 
-body {
-    margin: 0;
-    background-color: #f2f2f2;
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+  color:var(--text);
+
+  /* soft background + your emoji svg */
+  background:
+    url("/static/bg-emojis.svg") center 120px / 1100px auto no-repeat,
+    radial-gradient(900px 650px at 18% 18%, rgba(255,105,180,.18), transparent 60%),
+    radial-gradient(900px 650px at 82% 25%, rgba(99,102,241,.14), transparent 60%),
+    linear-gradient(180deg, var(--bg1), var(--bg2));
 }
 
-header {
-    background-color: #2c3e50;
-    color: white;
-    padding: 20px;
-    text-align: center;
+/* HEADER: pink background, big bold title */
+header{
+  padding: 26px 18px 22px;
+  text-align:center;
+  background: linear-gradient(135deg, rgba(255,105,180,.55), rgba(255,192,203,.35));
+  border-bottom: 1px solid rgba(255,105,180,.18);
+  backdrop-filter: blur(6px);
+}
+header h1{
+  margin:0 0 6px;
+  font-size: clamp(30px, 4vw, 46px);
+  font-weight: 900;
+  letter-spacing: .3px;
+  color:#111827;
+}
+header p{
+  margin:0;
+  font-size: 14px;
+  color: rgba(17,24,39,.70);
 }
 
-.container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-    flex-wrap: wrap;
+/* MAIN: 50/50 layout */
+.container{
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 22px 18px 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* half-half */
+  gap: 18px;
+  align-items: start;
 }
 
-.box {
-    background-color: white;
-    padding: 20px;
-    width: 300px;
-    border-radius: 8px;
+/* CARDS: soft pink with opacity */
+.box{
+  background: rgba(255,255,255,.62);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  backdrop-filter: blur(10px);
+  position: relative;
+  transition: transform .14s ease, box-shadow .22s ease, border-color .22s ease;
+}
+.box:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 22px 60px rgba(17,24,39,.14);
+  border-color: rgba(255,105,180,.30);
 }
 
-textarea {
-    width: 100%;
-    height: 100px;
+.box h2{
+  margin: 0 0 12px;
+  font-size: 18px;
+  font-weight: 800;
 }
 
-button {
-    margin-top: 10px;
-    padding: 10px;
-    width: 100%;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    cursor: pointer;
+/* TEXTAREA: bigger */
+textarea{
+  width: 100%;
+  min-height: 210px;   /* bigger enter text area */
+  padding: 14px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(17,24,39,.15);
+  background: rgba(255,255,255,.75);
+  color: var(--text);
+  outline: none;
+  resize: vertical;
+  transition: box-shadow .2s ease, border-color .2s ease;
+}
+textarea::placeholder{ color: rgba(107,114,128,.9); }
+textarea:focus{
+  border-color: rgba(255,105,180,.55);
+  box-shadow: 0 0 0 5px rgba(255,105,180,.18);
 }
 
-button:hover {
-    background-color: #2980b9;
+/* BUTTON: hover grow */
+button{
+  margin-top: 14px;
+  width: 100%;
+  padding: 14px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,105,180,.22);
+  background: linear-gradient(135deg, rgba(255,105,180,.85), rgba(255,145,200,.75));
+  color: #111827;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: transform .12s ease, filter .18s ease, box-shadow .2s ease;
+}
+button:hover{
+  transform: scale(1.03);
+  filter: brightness(1.03);
+}
+button:active{ transform: scale(1.01); }
+
+/* RESULT badge */
+#result{
+  font-weight: 900;
+  font-size: 16px;
+  letter-spacing: .25px;
+}
+#result{
+  display:inline-block;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(17,24,39,.06);
+  border: 1px solid rgba(17,24,39,.10);
+}
+
+/* GIF top-right on result card (requires .result-card class in JS) */
+.result-card::after{
+  content:"";
+  position:absolute;
+  top: 16px;
+  right: 16px;
+  width: 84px;
+  height: 84px;
+  background-repeat:no-repeat;
+  background-size:contain;
+  background-position:center;
+  opacity: 0;
+  transform: translateY(2px);
+  transition: opacity .2s ease, transform .2s ease;
+  pointer-events:none;
+}
+
+/* Positive / Negative theme + gif */
+body.positive{
+  --pink-border: rgba(34,197,94,.22);
+}
+body.positive .result-card::after{
+  background-image: url("/static/positive.gif");
+  opacity: 1;
+  transform: translateY(0);
+}
+body.positive #result{
+  color: var(--pos);
+  background: rgba(22,163,74,.10);
+  border-color: rgba(22,163,74,.30);
+}
+
+body.negative{
+  --pink-border: rgba(239,68,68,.22);
+}
+body.negative .result-card::after{
+  background-image: url("/static/negative.gif");
+  opacity: 1;
+  transform: translateY(0);
+}
+body.negative #result{
+  color: var(--neg);
+  background: rgba(220,38,38,.10);
+  border-color: rgba(220,38,38,.30);
 }
 
 /* Responsive */
-@media (max-width: 600px) {
-    .container {
-        flex-direction: column;
-        align-items: center;
-    }
+@media (max-width: 900px){
+  .container{ grid-template-columns: 1fr; }
+  .result-card::after{ width: 74px; height: 74px; }
+  body{ background-size: 900px auto, auto, auto, auto; }
 }
+/* === EXTRA PATCH (do not break existing) === */
+
+/* 1) Title font like Bangers */
+header h1{
+  font-family: "Bangers", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  letter-spacing: 1px;
+  text-transform: none;
+  text-shadow: 0 6px 18px rgba(17,24,39,.14);
+}
+
+/* 2) Make cards fill screen more (50/50 bigger) */
+.container{
+  max-width: 1400px;          /* wider */
+  min-height: calc(100vh - 140px);
+  padding: 18px 22px 26px;
+  gap: 22px;
+}
+
+.box{
+  padding: 22px;
+  background: rgba(255,255,255,.48);   /* more transparent */
+  backdrop-filter: blur(14px);
+}
+
+/* Make the left card area feel bigger */
+textarea{
+  min-height: 300px; /* bigger input */
+  background: rgba(255,255,255,.55);
+}
+
+/* Result card height a bit taller so it balances */
+.result-card{
+  min-height: 210px;
+}
+
+/* 3) Button: keep pink + make TEXT grow on hover */
+button{
+  background: linear-gradient(135deg, rgba(255,105,180,.95), rgba(255,145,200,.85));
+  color:#111827;
+}
+
+button:hover{
+  transform: scale(1.03);
+}
+
+button:hover span,
+button:hover strong{
+  font-size: 1.05em;
+}
+
+/* If button text is plain (no span), this still works */
+button:hover{
+  font-size: 1.05em;
+}
+
+/* Responsive still OK */
+@media (max-width: 900px){
+  textarea{ min-height: 240px; }
+  .result-card{ min-height: 180px; }
+}
+
+header h1{ font-family: "Bangers", sans-serif !important; }
+
+header h1{ font-family: "Bangers", sans-serif !important; }

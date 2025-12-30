@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Sentiment Analysis</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/style.css">
+  <meta charset="UTF-8">
+  <title>Positive/Negative Sentence Analysis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/static/style.css?v=999">
+
+  <!-- Title font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
 </head>
+
 <body>
-
-<header>
-    <h1>Sentiment Analysis App</h1>
+  <header>
+    <h1>Positive/Negative Sentence Analysis</h1>
     <p>Web Programming with Python and Git – Term Project</p>
-</header>
+  </header>
 
-<main class="container">
+  <main class="container">
     <section class="box">
-        <h2>Enter Text</h2>
-        <textarea id="textInput" placeholder="Type a sentence..."></textarea>
-        <button id="analyzeBtn">Analyze</button>
+      <h2>Enter Text</h2>
+      <textarea id="textInput" placeholder="Type a sentence..."></textarea>
+      <button id="analyzeBtn">Analyze</button>
     </section>
 
-    <section class="box">
-        <h2>Result</h2>
-        <p><strong>Sentiment:</strong> <span id="result">-</span></p>
+    <section class="box result-card">
+      <h2>Result</h2>
+      <p><strong>Sentiment:</strong> <span id="result">-</span></p>
     </section>
-</main>
+  </main>
 
-<script src="/static/app.js"></script>
+  <script src="/static/app.js?v=999"></script>
 </body>
 </html>
