@@ -28,7 +28,7 @@ body{
 
   /* soft background + your emoji svg */
   background:
-    url("/static/bg-emojis.svg") center 120px / 1100px auto no-repeat,
+    url("/static/background.png") center 120px / 1100px auto no-repeat,
     radial-gradient(900px 650px at 18% 18%, rgba(255,105,180,.18), transparent 60%),
     radial-gradient(900px 650px at 82% 25%, rgba(99,102,241,.14), transparent 60%),
     linear-gradient(180deg, var(--bg1), var(--bg2));
